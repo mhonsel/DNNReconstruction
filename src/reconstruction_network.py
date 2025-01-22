@@ -120,11 +120,7 @@ class ReconstructionNetwork:
         self.length = len(self.inverse_sequentials)
 
     def __len__(self) -> int:
-        """Get the number of reconstruction layers.
-
-        Returns:
-            int: Number of reconstruction layers in the network.
-        """
+        """Get the number of reconstruction layers."""
         return self.length
 
     def train(self) -> None:
@@ -169,12 +165,7 @@ class ReconstructionNetwork:
         self.net.load_state_dict(params['model'])
 
     def _construct_inverse_sequentials(self) -> List[nn.Module]:
-        """Construct inverse sequential modules for each layer in the DNN.
-
-        Returns:
-            List[nn.Module]: A list of `InverseSequential` modules, each corresponding
-                to a forward layer (linear + activation) in the original network.
-        """
+        """Construct inverse sequential modules for each layer in the DNN."""
         inverse_sequentials = []
         # Get all modules from the DNN
         modules = self.net.modules()
@@ -290,8 +281,7 @@ class ReconstructionNetwork:
             verbose (bool, optional): Whether to show a progress bar. Defaults to False.
 
         Returns:
-            np.ndarray: A 1D array of length `len(self)` with the accumulated loss
-                for each reconstruction layer.
+            np.ndarray: A 1D array with the accumulated loss for each reconstruction layer.
         """
         # Set reconstruction layers to evaluation mode
         self.eval()
@@ -334,9 +324,7 @@ class ReconstructionNetwork:
             verbose (bool, optional): Whether to print timing information. Defaults to False.
 
         Returns:
-            List[torch.Tensor]: A list of reconstructed tensors, one for each
-            reconstruction stage. The first element is the original input, and
-            subsequent elements are the reconstructions after each layer's inversion.
+            List[torch.Tensor]: A list of reconstructed tensors, one for each layer
         """
         t1 = time.time()
 
