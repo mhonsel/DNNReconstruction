@@ -37,7 +37,7 @@ def is_number(s: str) -> bool:
 
 
 def shannon_entropy_from_array(
-    arr: np.ndarray, bins: int, normalize: bool = True
+    arr: np.ndarray, bins: int, normalize: bool = False
 ) -> float:
     """Compute the Shannon entropy of a given numpy array via histogram binning.
 
@@ -54,7 +54,7 @@ def shannon_entropy_from_array(
     # Retain only nonzero bins
     p = p[p > 0]
     # Compute the raw Shannon entropy, i.e. -\sum p * log(p)
-    H = -np.sum(p * np.log(p))
+    H = -np.sum(p * np.log2(p))
 
     # Optionally normalize by array size
     if normalize:
@@ -1108,6 +1108,7 @@ def create_heatmap(
     data_labels: Optional[np.ndarray],
     x_ticks: Union[int, tuple],
     y_ticks: Union[int, tuple],
+    cbar_ticks: Union[None, tuple] = None,
     aspect: str = 'auto'
 ) -> Tuple[plt.Figure, plt.Axes]:
     """Create a heatmap with optional data annotations and colorbar.
@@ -1145,6 +1146,9 @@ def create_heatmap(
     # Add the colorbar on the right side
     cbar = add_colorbar(im, ax)
     cbar.set_label(z_label, rotation=90)
+    if cbar_ticks is not None:
+        cbar.set_ticks(cbar_ticks)
+        cbar.set_ticklabels(cbar_ticks)
 
     # Title and axis labels
     ax.set_title(title, fontsize=11)
